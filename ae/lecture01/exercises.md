@@ -1,5 +1,11 @@
 ---
 title: AE - Exercises for lecture 1
+date: 5/2/2024
+author: ESD4-410
+geometry:
+- top=30mm
+- left=20mm
+- right=20mm
 ---
 
 # Exercise 1.1
