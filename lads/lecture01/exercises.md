@@ -1,4 +1,6 @@
-# LADS - Exercises for lecture 1
+---
+title: LADS - Exercises for lecture 1
+---
 
 # Exercise 1.1
 
