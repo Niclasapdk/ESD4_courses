@@ -77,6 +77,8 @@ np.linalg.det(A)=1.4400000000000006
 np.linalg.det(B)=1599.9999999999998
 ```
 
+![fix/ex123_sol.jpg](fix/ex123_sol.jpg)
+
 # Exercise 1.4
 
 ![fig/ex4.png](fig/ex4.png)
@@ -92,3 +94,5 @@ a.
 8. Divide row 3 with 2 and subtract from row 2
 9. Swap row 1 and row 4. Now r=1
 10. Swap row 2 and row 4. Now r=2
+
+![fix/ex4_sol.png](fix/ex4_sol.png)
