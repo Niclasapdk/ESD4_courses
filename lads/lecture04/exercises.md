@@ -181,14 +181,13 @@ $$
 
 2. $\frac{1}{2+z^4}$
 
-**Not sure that this is correct**
-
 Substitution method:
 
 $$
-\frac{1}{1-q} = \frac{1}{2+z^4} \implies q = -1 - z^4 \\
-\frac{1}{2+z^4} = \sum_{n=0}^\infty q^n = \sum_{n=0}^\infty (-1 -z^4)^n
-= \sum_{n=0}^\infty (-1)^n (z^4+1)^n
+\frac{1}{2+z^4} = \frac{1}{2} \cdot \frac{1}{1 + \frac{z^4}{2}}
+= \frac{1}{2} \cdot \frac{1}{1-q} \implies q = -\frac{z^4}{2} \\
+\frac{1}{2+z^4} = \frac{1}{2} \sum_{n=0}^\infty q^n = \frac{1}{2} \sum_{n=0}^\infty (-\frac{z^4}{2})^n
+= \frac{1}{2} \sum_{n=0}^\infty \frac{(-1)^n}{2^n} z^{4n}
 $$
 
 3. $\frac{1}{2+5iz}$
