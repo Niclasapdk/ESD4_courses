@@ -14,4 +14,6 @@ $ \int_{0}^{1}\int_{0}^{1-x}\int_{0}^{1-x-y} x dx dy dz $
 
 then we just solve the integral from inside out
 
-$\int_{0}^{1-x-y} x dx dy dz \rightarrow → x\cdot z \vert_{0} \rightarrow  $
+$\int_{0}^{1-x-y} x dx dy dz → x\cdot z \vert_{0}^{1-x-y}$
+
+![img6493.png](images/img6493.png)
