@@ -1,14 +1,22 @@
 # Bestemmelse af motor parametere
 
+## Resultater
+
+$$R=2.08\Omega$$
+$$L=44.93\mathrm{\mu H}$$
+$$K_e = 4.68\cdot10^{-3}\mathrm{Vs}$$
+$$K_t = 0.247 \frac{\mathrm{Nm}}{\mathrm{A}}$$
+$$B = 0.526\cdot10^{-3}\mathrm{Nms}$$
+
 ### Resistance (R)
 
 Spændingen skrues langsom op til lige inden motoren starter.
 Herefter aflæses spændingen og strømmen til motoren for at beregne modstanden af motoren.
 
-$U = 2.5\mathrm{V} $
-$I = 1.2\mathrm{A}$
-Det resultere til:
-$R = \frac{U}{I} = 2.08\Omega$
+$$U = 2.5\mathrm{V}$$
+$$I = 1.2\mathrm{A}$$
+Det resulterer til:
+$$R = \frac{U}{I} = 2.08\Omega$$
 
 ### Inductance (L)
 
@@ -17,6 +25,7 @@ Spænd bolten så motoren forbliver i stilstand.
 Giv en $14\mathrm{V}$ step voltage til motoren aflæs strømkurven(grønne kurve) ved brug af tang amperet koblet til oscilloscopet.
 
 **Scope indstillinger og måling:**
+
 ![](induction_time_constant.png)
 
 Aflæs maks strømmen ($22A$) udfra grafen og herefter udregn strømmen ved $63.2\mathrm{\%}$ som er $13.9\mathrm{A}$.
@@ -85,13 +94,18 @@ Indstil bolten så det bremser motoren og derefter aflæs spændingen fra torque
 
 Newton meter relation til spænding for motoren: $10\mathrm{Nm} = 5.001\mathrm{V}$
 
-$K_t$ findes som:
+Torque findes som:
 
 $$\frac{\mathrm{meassured\:\: voltage}}{\mathrm{torquemeter\:\: voltage}}\cdot\mathrm{torquemeter\:\: Nm}$$
 
-Nu skal de to tabeller bruges sammen så der skal tages $K_t$(y-axis) fra den nedenstående og plottes med angular velocity for den overstående tabels(x-axis) og med dette kan $B$ findes som hældningen af den funktion.
+$K_t$ er
+$$
+\frac{\mathrm{torque}}{current}
+$$
 
-| Voltage [V] | Current [A] | Newton/meter voltage |$K_t$ torque [Nm]|
+Dernæst lader vi motoren køre frit ved forskellige RPMs og finder $B$ ved hældningen af torque vs angular velocity plot.
+
+| Voltage [V] | Current [A] | Newton/meter voltage | Torque [Nm]|
 |---------|---------|----------------------|-|
 |1|0.3|30mV|0.059|
 |2|0.9|60mV|0.119|
@@ -108,66 +122,36 @@ Nu skal de to tabeller bruges sammen så der skal tages $K_t$(y-axis) fra den ne
 |13|20.5|2.88V|5.758|
 |14|24.2|3.22V|6.438|
 
-
-Her er de data som er blevet brugt til grafen for $B$.
-
-|Angular velocity|$K_t$|
-|-|-|
-|26,18	|0,259|
-|99,48	|1,539|
-|175,92|	3,359|
-|253,421|	4,599|
-|327,77|	5,758|
-|372,49|	6,428|
-
 Plot:
+
 ![](b_plot.png)
-Hældningen blev fundet til at være: $B = 0.017$
-
-Liste over fundne data:
-
-* $R=2.08\Omega$, $L=44.93\mu H$
-  
-|$K_t$|$K_e$|
-|-|-|
-|0.059|2.398783e-02|
-|0.119|2.516994e-02|
-|0.399|2.607867e-02|
-|0.999|2.714841e-02|
-|1.539|2.798279e-02|
-|2.199|2.806849e-02|
-|2.739|-|
-|3.359|-|
-|3.999|-|
-|4.599|-|
-|5.118|-|
-|5.518|-|
-|5.758|-|
-|6.438|-|
 
 Matlab beregninger:
 ```Matlab
 %% 3
 close all; clear;
-R = 2.08;
-RPM = [250 950 1680 2420 3130 3560];
-U = [2.5 5 7.5 10 12.5 14];
-current = [0.9 1.2 1.4 1.5 1.6 1.7];
-for i = 1:length(RPM)
-    angular(i) = (RPM(i) * 2 * pi)/60;
-end
+current = [0.3 0.9 2.1 4.1 6 8.4 10.6 12.7 14.6 16.8 18.6 20.1 20.5 24.2];
 torquevol = 5.001;
 torqueconstant = 10;
-Nmvol = [30E-3 60E-3 200E-3 500E-3 770E-3 1.1 1.37 1.68 2 2.3 2.56 2.76 2.88 3.22];
-for i = 1:length(Nmvol)
-   Kt(i) = (Nmvol(i)/ torquevol) * torqueconstant
+torquevoltage = [30E-3 60E-3 200E-3 500E-3 770E-3 1.1 1.37 1.68 2 2.3 2.56 2.76 2.88 3.22];
+for i = 1:length(torquevoltage)
+   torque(i) = (torquevoltage(i)/ torquevol) * torqueconstant
 end
-fprintf('Kt %d,\n',Kt)
-newKt = [0.259 1.539 3.359 4.599 5.758 6.428];
-plot(angular,newKt);
+fprintf('torque %d,\n',torque)
+Ktarray = torque./current
+Kt = mean(Ktarray)
+
+% calculate b
+current_b = [0.9 1.2 1.4 1.5 1.6 1.7];
+RPM_b = [250 950 1680 2420 3130 3560];
+for i = 1:length(RPM_b)
+    angular(i) = (RPM_b(i) * 2 * pi)/60;
+end
+torque_b = current_b .* Kt
+plot(angular,torque_b);
 xlabel('\omega','FontSize',14);
-ylabel('K_t','FontSize',14);
-b = polyfit(angular, newKt, 1);
-slope = b(1)
+ylabel('Torque','FontSize',14);
+f = polyfit(angular, torque_b, 1);
+b = f(1)
 grid on;
 ```
