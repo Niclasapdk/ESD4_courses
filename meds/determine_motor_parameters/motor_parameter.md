@@ -1,8 +1,6 @@
-# Bestemmelse af motor konstanter ESD 410
+# Bestemmelse af motor parametere
 
 ### Resistance (R)
-
-Test opstilling: ??
 
 Spændingen skrues langsom op til lige inden motoren starter.
 Herefter aflæses spændingen og strømmen til motoren for at beregne modstanden af motoren.
@@ -14,16 +12,16 @@ $R = \frac{U}{I} = 2.08\Omega$
 
 ### Inductance (L)
 
-Spænd torgue meteret så motoren forbliver ved zero velocity.
+Spænd bolten så motoren forbliver i stilstand.
 
-Giv en $14\mathrm{V}$ step voltage til motoren aflæs strømkurven ved brug af tang amperet koblet til oscilloscopet.
+Giv en $14\mathrm{V}$ step voltage til motoren aflæs strømkurven(grønne kurve) ved brug af tang amperet koblet til oscilloscopet.
 
 **Scope indstillinger og måling:**
 ![](induction_time_constant.png)
 
-Aflæs maks strømmen ($22A$) udfra grafen og herefter udregn strømmen ved $63.2\mathrm{\%}$ som er $13.9A$.
+Aflæs maks strømmen ($22A$) udfra grafen og herefter udregn strømmen ved $63.2\mathrm{\%}$ som er $13.9\mathrm{A}$.
 
-Derefter ses tidskontanten udfra grafen ved $13.9$ at den er $21.6\mu S$.
+Derefter ses tidskontanten udfra grafen ved $13.9\mathrm{A}$ at den er $21.6\mu S$.
 Herefter kan man udregne $L$ som er $44.93\mu H$ hvilket er givet af: $\tau = \frac{L}{R}\Leftrightarrow L = \tau\cdot R$ 
 
 
@@ -31,7 +29,7 @@ Herefter kan man udregne $L$ som er $44.93\mu H$ hvilket er givet af: $\tau = \f
 %% 1
 %L
 clear; close all;
-[File1,Path1] = uigetfile('*.csv', 'placeholder');
+[File1,Path1] = uigetfile('*.csv', '');
 FullFile1 = fullfile(Path1,File1);
 table1 = readtable(FullFile1);
 
@@ -40,7 +38,7 @@ grid on;
 ```
 ### Ke
 
-Kør motoren uden torgue meteret ved forskellige spændinger og aflæs rotationer med tachometer.
+Lad motoren køre frit ved forskellige spændinger og aflæs rotationer ved hjælp af tachometer.
 
 Angular velocity er givet som:
 $$\omega = RPM \cdot 2\cdot \frac{\pi}{60}$$
@@ -49,7 +47,8 @@ $K_e$ er givet som:
 
 $$K_e = \frac{U-Ri}{\omega}$$
 
-Tachometeret giver angular velocity og spændingen har man fra strømforsyningen resultaterne for $K_e$ kan se i tabellen:
+Tachometeret giver RPM som kan omregnes til $\omega$ og spændingen er givet fra strømforsyningen.
+Resultaterne for $K_e$ kan se i tabellen:
 
 
 | Voltage [V]| Current [A] | RPM | Angular velocity [rad/s]|$K_e$|
@@ -61,7 +60,7 @@ Tachometeret giver angular velocity og spændingen har man fra strømforsyningen
 |12.5|1.6|3130|327.77 |2.798279e-02|
 |14|1.7|3560| 372.49 |2.806849e-02|
 
-Matlab script:
+Matlab beregninger:
 ```Matlab
 %% 2
 close all; clear;
@@ -82,7 +81,7 @@ fprintf('Ke %d,\n', Ke);
 
 ### Kt and B
 
-Indstil torque meter så det bremser motoren og derefter aflæs spændingen fra torquemeter gradvist med forskellige spændings intervaller fra strømforsyningen til motoren.
+Indstil bolten så det bremser motoren og derefter aflæs spændingen fra torquemeter gradvist ved forskellige spændings intervaller fra strømforsyningen til motoren.
 
 Newton meter relation til spænding for motoren: $10\mathrm{Nm} = 5.001\mathrm{V}$
 
@@ -110,6 +109,8 @@ Nu skal de to tabeller bruges sammen så der skal tages $K_t$(y-axis) fra den ne
 |14|24.2|3.22V|6.438|
 
 
+Her er de data som er blevet brugt til grafen for $B$.
+
 |Angular velocity|$K_t$|
 |-|-|
 |26,18	|0,259|
@@ -119,8 +120,32 @@ Nu skal de to tabeller bruges sammen så der skal tages $K_t$(y-axis) fra den ne
 |327,77|	5,758|
 |372,49|	6,428|
 
-Slope blev fundet til at være: $0.017$
+Plot:
+![](b_plot.png)
+Hældningen blev fundet til at være: $B = 0.017$
 
+Liste over fundne data:
+
+* $R=2.08\Omega$, $L=44.93\mu H$
+  
+|$K_t$|$K_e$|
+|-|-|
+|0.059|2.398783e-02|
+|0.119|2.516994e-02|
+|0.399|2.607867e-02|
+|0.999|2.714841e-02|
+|1.539|2.798279e-02|
+|2.199|2.806849e-02|
+|2.739|-|
+|3.359|-|
+|3.999|-|
+|4.599|-|
+|5.118|-|
+|5.518|-|
+|5.758|-|
+|6.438|-|
+
+Matlab beregninger:
 ```Matlab
 %% 3
 close all; clear;
@@ -146,6 +171,3 @@ b = polyfit(angular, newKt, 1);
 slope = b(1)
 grid on;
 ```
-
-Plot:
-![](b_plot.png)
