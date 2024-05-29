@@ -5,11 +5,10 @@
 
 #### 1.
 
-Hermitisk er en kompleks matrix.
-Skævsymmetrisk brug "complex conjugate" $-\bf{A} = \bf{A}^H$
+For kompleks matrix for at finde om den er skævsymmetrisk brug: $-\bf{A} = \bf{A}^H$
 
 Så konjugere man:
-$$A^H = (A*)^T$$
+$$A^H = (*A)^T$$
 
 $$
 A^* = \begin{bmatrix}
@@ -32,23 +31,21 @@ $$
 \end{bmatrix}
 $$
 
-Udfra det overstående ses der et den er Skævhermitisk.
+Udfra det overstående ses der et den er skævhermitisk.
 
 **Check om matrixen er normal ved dette:**
 $$\bf{A}^H\bf{A}=\bf{A}\bf{A}^H$$
 
 Svaret er ja!
 
-**Check om hermitiske:**
+**Check om hermitisk:**
 
 $$ \bf{A} = \bf{A}^H$$
 
-Resten af mulighederne passer ikke så den er normal og Skævhermitisk.
-
-**Liste af identiteter:**
+**Check om unitær**
 
 Unitary matrix:
-$U^H = U^{-1}$
+$A^H = A^{-1}$
 
 Inverse af en matrix to måder:
 
@@ -60,12 +57,19 @@ $[I | A^{-1}]$
 Anden er noget mere involveret:
 $adj(\bf{A})/det(\bf{A})$
 
+Eksempel på adj for B:
+\begin{align}\bf{B} =
+    \begin{bmatrix}
+        a & b\\
+        c & d
+    \end{bmatrix}\qquad adj(\bf{B}) = \begin{bmatrix}d& -b\\ -c & a\end{bmatrix} 
+\end{align}
+
 Den inverse af matrix eksitere kun hvis matrix er square og determinanten er $\neq 0$
-bliver til 1 række istedet hvorimod søjlen for med 4 i bliver til en række for 4.
 
 Transpose example:
 
-Du tager diagonalen altså $1 \: 4$ og ligger søjlen under 1 op så det bliver til 1 række istedet hvorimod søjlen for med 4 i bliver til en række for 4.
+Du tager diagonalen altså $1 \quad 4$ og ligger søjlen under 1 op så det bliver til 1 række istedet hvorimod søjlen for med 4 i bliver til en række for 4.
 
 $$
 B = \begin{bmatrix}
@@ -91,22 +95,32 @@ j0.6 & -j0.8
 \end{bmatrix}
 $$
 
+
+**Resten af mulighederne passer ikke så den er normal og skævhermitisk.**
+
+
 #### 2.
 
-De vil være imaginære fordi skæv hermitiske matrixer altid giver imaginære egenværdier eller 0 og 0 er ikke et svar.
+De vil være imaginære fordi skæv hermitiske matrixer altid giver imaginære egenværdier eller 0, og vi er ikke interesseret i den trivielle nul løsning.
+
+**Tabel over sammenhæng mellem eigenværdier og typer er matrixer:**
+
+![](matrix_table_eigenvalue.png)
 
 #### 3.
 
-Så udregn eigenværdierne og løs for dens eigen vektore men det giver et anderledes svar end givet dette er meningen troels vælger en anden værdi for eigen vektor.
+Så udregn eigenværdierne og løs for dens eigen vektore. 
 
 
 Determinant eksempel for 2x2 matrix:
-$$ A =\begin{bmatrix} a & b \\ c & d \end{bmatrix}\\ =|A| =ad-bc $$
+$$ A =det(\begin{bmatrix} a & b \\ c & d \end{bmatrix})\\ =|A| =ad-bc $$
 
 Eigenvalue:
 $$det(A-\lambda I) = 0$$
 
-$$
+Og her er $\bf{I}$ en identitets matrice
+
+\begin{align*}
 det(
 \begin{bmatrix}
 j0.8 & j0.6 \\
@@ -120,8 +134,15 @@ j0.6 & -j0.8
 \begin{bmatrix} j0.8-\lambda & j0.6\\j0.6 & -j0.8-\lambda \end{bmatrix}
 ) = 0\\ =
 \lambda^2+1 = 0
-$$
+\end{align*}
+
 Løs for rødderne $\lambda$: $\lambda_1 = j$, $\lambda_2 = -j$
+
+Formel for andengrads polynomies rødder:
+
+\begin{align*}
+    x_{1,2} = -\frac{b \pm (\sqrt{b^2-4ac})}{2a}
+\end{align*}
 
 Eigenspace/eigenvector:
 $$E = {\vec{v}:\: (A-\lambda I)\vec{v} = 0}$$
@@ -131,7 +152,7 @@ Sæt $\lambda$ værdierne ind og løs for $\vec{v} = [x_1,x_2]^T$
 for $\lambda_1$
 
 $$
-\begin{bmatrix} -j0.8 - j & j0.6 \\ j0.6 & -j0.8 - j \end{bmatrix}
+\begin{bmatrix} j0.8 - j & j0.6 \\ j0.6 & -j0.8 - j \end{bmatrix}
 \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0
 $$
 
@@ -143,7 +164,7 @@ Hernæst udfør gaussisk elimination:
 $$
 \begin{bmatrix} -j0.2 & j0.6 & 0\\j0.6 & -j1.8 & 0\end{bmatrix}\begin{bmatrix} x_1\\x_2\end{bmatrix} 
 \overset{r_2=3r_1+r_2}{\longrightarrow} \begin{bmatrix} -j0.2 & j0.6 & 0 \\ 0 & 0 & 0\end{bmatrix}\begin{bmatrix} x_1\\x_2\end{bmatrix}
-\overset{r_1=5r_1 + r_1}{\longrightarrow}\\
+\overset{r_1=-6r_1 + r_1}{\longrightarrow}\\
 $$
 $$
 \begin{bmatrix}
@@ -164,7 +185,14 @@ Samme procedure for $\lambda_2$ hvilket giver: $[-0.33, 1]^T$ hvilket stemmer ov
 For at checke om dine svar rigtig brug:
 $\bf{A}\vec{x} = \lambda \vec{x}$
 
-$\vec{x}$ er eigenvector til den $\lambda$ du vil sætte ind.
+$\vec{x}$ er eigenvector til den tilhørende $\lambda$ du vil sætte ind.
+
+
+Egenbasen er derfor egenvektorene sat i en matrix:
+\begin{align}
+\begin{bmatrix} 3 & -0.33 \\ 1 & 1 \end{bmatrix}
+\end{align}
+
 
 ### Matlab
 ```Matlab
@@ -215,17 +243,16 @@ A=\begin{bmatrix}
 \end{bmatrix}
 $$
 
-**Basis for søjlerum:**
-Det er de 4 søjler i matrixen som udgør en basis for søjlerummet.
-Dette kan findes ved hjælp af row reduktion og tælle antal pivots der kommer.
-I dette tilfælde har alle søjler en pivot ergo fuld rank.
+**Row reduktion eksempel:**
 
-Row reduktion:
+Det understående eksempel mangler at fjerne de sidste to rækker ellers passer det til row reduced echeolon form.
 
-Begyndelse på row reduktion:
+![](rowreduction_opg2.png)
+
+Resultatet på row reduced echeolon form:
 
 $$
-A =
+\bf{A} =
 \begin{bmatrix}
 1 & 0 & 0 & 0  \\
 0 & 1 & 0 & 0  \\
@@ -236,11 +263,17 @@ A =
 \end{bmatrix}
 $$
 
+**Basis for søjlerum:**
+Det er de 4 søjler i matrixen fra den originale matrix!! som udgør en basis for søjlerummet.
+Dette kan ses ved hjælp af row reduktion og tælle antal pivots der kommer.
+I dette tilfælde har alle søjler en pivot ergo fuld rank.
 
 **Basis for rækkerum:**
-For rækkerum så det row reduktion igen og alle de rækker som kun har 0 kan ikke vælges som en basis for rækkerum.
+For rækkerum så det row reduktion igen og alle de rækker som har udelukkende 0 kan ikke vælges som en basis for rækkerum fra den originale.
 
-Så det er række $r_1, r_2, r_3, r_4$
+Deraf rækkerne $r_1, r_2, r_3, r_4$
+
+Rang for række og søjle er ens på row reduced echeolon form!
 
 #### 2.
 
@@ -248,9 +281,8 @@ $$
 \bf{A}\vec{x} = \vec{0}
 $$
 
-Udfra row reduktion fra 1) af kan man se at nullititen er 0 og der en kun en løsning at det er den trivielle 0 løsning der er ikke andre vektor som giver relationen:
+Udfra row reduktion fra 1) kan man se at nullititen er 0 og der kun en løsning hvilket er den trivielle 0 løsning der er ikke andre vektor som giver relationen:
 
-Det ses særlig fordi der ikke er nogen tal til overs udover 1
 De er alle sammen linære uafhængig.
 
 $$
@@ -263,6 +295,7 @@ Nulitet kan også udtrykkes som: Rank + Null = Antal Coloumns.
 $rank(\bf{A}) = 4$ altså fuld rank og antal søjler er 4
 
 $4 - 4 = 0$
+
 
 ```Matlab
 %% Opg2
@@ -294,6 +327,10 @@ Opstil for b1, b2 og b3:
 $$c_1\begin{bmatrix} 2 \\ -1 \\ 2 \end{bmatrix}+c_2\begin{bmatrix} -2 \\ 2\\ -3 \end{bmatrix} + c_3\begin{bmatrix} -1 \\ 1\\ -2 \end{bmatrix} =\begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} $$
 
 Fuld augmenteret matrix hvorefter række reduktion:
+
+**Svar på tavle for opg3**
+
+![](tavle_answer_opg3.png)
 
 $$
 \begin{bmatrix} 2 & -2 & -1 & 0 \\
@@ -339,20 +376,17 @@ For at diagonaliser så skal nogle? af de her 4 ting gælde:
 3. sum of geometric multiplicities is n.
 4. for each $\lambda$ geo. multiplicity = algebraic multiplicity
 
-Men for den her gælder det at hvis: $A^HA = AA^H$ så kan den diagonaliseres.
+Men for den her gælder det at hvis din matrix er hermitisk($\bf{A} = \bf{A}^H$) og normal: ($A^HA = AA^H$) så kan den diagonaliseres.
 
 Hvor $A^H=(*A^T)$ er dens conjugate transpose eksempel:
-
-![](conjugate_transpose.png)
 
 $$AA^H=\begin{bmatrix} 8 & 0 & 8i \\ 0 & 16 & 0 \\ -8i & 0 & 8 \end{bmatrix}\\ A^HA = \begin{bmatrix} 8 & 0 & 8i \\ 0 & 16 & 0 \\ -8i & 0 & 8 \end{bmatrix}$$
 
 #### 2.
 
-For at diagonaliser så skal man opnå for $A$: $D = U^{-1}AU$.
-Hvor $U$ indeholder i sine søjler værdierne fra eigenvektorene: $\mathbf{u_1},\mathbf{u_2},\mathbf{u_3}$
+For at diagonaliser så skal man opnå for $\bf{A}$: $\bf{D} = \bf{U}^{-1}\bf{A}\bf{U}$.
+Hvor $\bf{U}$ indeholder i sine søjler værdierne fra eigenvektorene: $\mathbf{u_1},\mathbf{u_2},\mathbf{u_3}$
 Samtidig skal $\mathbf{D}$ have egenværdierne i sin diagonal.
-
 
 
 $$det(\begin{bmatrix}0 & 2+2i & 0 \\ 2-2i & 0 & 2+2i \\ 0 & 2-2i & 0 \end{bmatrix} - \begin{bmatrix}\lambda & 0 & 0\\0 & \lambda & 0\\0 & 0 & \lambda\end{bmatrix}) = 0$$
@@ -362,27 +396,17 @@ $$\lambda_1 = -4, \: \lambda_2 =  0,\: \lambda_3 = 4$$
 
 Løs for $\lambda_1$ eigenvector
 
-$$\begin{bmatrix}-4 & 2+2i & 0 \\ 2-2i & -4 & 2+2i \\ 0 & 2-2i & -4 \end{bmatrix}
-\begin{bmatrix}
-    u_1 \\ u_2 \\ u_3
-\end{bmatrix} = 0
-$$
+![](eigen_vector_opg4.png)
 
 $$
-\begin{bmatrix}-4u_1 & 2+2iu_2 & 0 & 0 \\ 2-2iu_1 & -4u_2 & 2+2iu_3 & 0 \\ 0 & 2-2iu_2 & -4u_3 & 0 \end{bmatrix}
-$$
-
-Her løses for de tre ligninger med de tre ubekendte.
-
-$$
-\mathbf{u_1} = [0 - 0.5i, 0.5+0.5i,-0.5]^T
+\vec{u_1} = [0 - 0.5i, 0.5+0.5i,-0.5]^T
 $$
 
 og for resten:
 
-$$\mathbf{u_2}  = [0 - 0.707i, 0,0.707]^T $$
+$$\vec{u_2}  = [0 - 0.707i, 0,0.707]^T $$
 
-$$\mathbf{u_3}  = [0 - 0.5i,-0.5-0.5i,-0.5]^T $$
+$$\vec{u_3}  = [0 - 0.5i,-0.5-0.5i,-0.5]^T $$
 Derfor bliver $U = \begin{bmatrix} 0 - 0.5i & -0.707i&-0.5i\\ 0.5+0.5i & 0 & -0.5-0.5i\\-0.5 & 0.707 & -0.5 \end{bmatrix}$
 
 Så for $\mathbf{D}$
@@ -425,30 +449,13 @@ D = inv(vA) * A * vA
     y'' + 4y = 0
 \end{equation}
 
-
 Stak af første ordens differential ligninger:
 
-
-\begin{align*}
-   y'_1 = f_1(y_1, y_2) = y_2 \\
-   y'_2 = f_2(y_1, y_2) = -4y_1 
-\end{align*}
-
-
-Differential ligning på matrix form:
-
-\begin{align*}
-    \vec{y}\:'= \bf{A} \vec{y} = \begin{bmatrix}y_1' \\ y_2'\end{bmatrix} =
-    \begin{bmatrix}
-        0 & 1\\
-        -4 & 0
-    \end{bmatrix}\begin{bmatrix}y_1 \\ y_2\end{bmatrix}
-\end{align*}
-
+![](odes_opg5.png)
 
 Den forventede løsning:
 \begin{align*}
-    y = C_1e^{\lambda_1}t + C_2e^{\lambda_2t}
+    y = C_1e^{\lambda_1t} + C_2e^{\lambda_2t}
 \end{align*}
 
 Løs for rødderne for at finde værdierne som skal ganges med t i den generelle løsnings.
@@ -470,16 +477,13 @@ Indsæt rødderne:
     y(t) = c_1cos(2t) + c_2sin(2t)
 \end{align*}
 
-#### løsning af eigenvalues
-
-\begin{align*} 
-    det(\begin{bmatrix} 0 & 1 \\ -4 & 0 \end{bmatrix} - \lambda \bf{I}) = 0 \\
-    det(\begin{bmatrix} -\lambda & 1 \\ -4 & -\lambda \end{bmatrix}) = 0 \\
-    (-\lambda)(-\lambda) - (-4 \cdot 1) = 0 \\
-    \lambda_1 = 2i  \qquad \lambda_2 = -2i
-\end{align*}
-
 Stable fordi (q): $2i \cdot -2i = 4$
+
+**Tabel over stabilitet for eigenværdier**
+
+![](stability_table.png)
+
+
 
 ```Matlab
 syms r
@@ -499,13 +503,17 @@ A = [0 1; -4 0];
 
 Først udregn z transformen af $h(n)$ og $x(n)$ hvorefter man ved for et LTI system at dette er givet: $H(z) = \frac{Y(z)}{X(z)}$ hvoraf man nu kan løse for $y(n)$ ved den inverse z-transform af $Y(z)$
 
-$$h(n)=3^nu(n-1) = 3(3)^{n-1}u(n-1)\:\mathrm{gilli\:cook}$$
+$$h(n)=3^nu(n-1) = 3(3)^{n-1}u(n-1)$$
 
 
 $$ 3 \cdot 3^{n - 1} = 3^{1 + n-1}$$
 
 
-$$X(z) = Z(x(n)) = Z(5u(n)) = \frac{5z}{z-1}\\H(z) = Z(h(n)) = Z(3(3)^{n-1}u(n-1)) = \frac{3z^{-1}}{1-3z^{-1}}$$
+Herfra tages z transformen af x(n) og h(n)
+
+\begin{align*}X(z) = Z(x(n)) = Z(5u(n)) = \frac{5z}{z-1}\\H(z) = Z(h(n)) = Z(3(3)^{n-1}u(n-1)) = \frac{3z^{-1}}{1-3z^{-1}}\end{align*}
+
+Herfra skal der isoleres for $Y(z)$
 
 $$Y(z) = H(z)\cdot X(z) = \frac{15z^{-1}}{(1-z^{-1})(1-3z^{-1})}\\=\frac{A_1}{1-z^{-1}} + \frac{A_2}{1-3z^{-1}}$$
 
@@ -514,6 +522,8 @@ $$A_1 = \left.(1-z^{-1})Y(z)\right\vert_{z=1}\\ =\left.\frac{15z^{-1}}{1-3z^{-1}
 $$A_2 = \left.(1-3z^{-1})Y(z)\right\vert_{z=3}\\ =\left.\frac{15z^{-1}}{1-z^{-1}}\right\vert_{z=3} = \frac{5}{1-1/3} = 15/2$$
 
 $$Y(z)=\frac{-15/2}{(1-z^{-1})}+\frac{15/2}{(1-3z^{-1})} \qquad |z|>3$$
+
+Hvorfra at radius of convergence går mod højre for den her
 
 
 $$Z^{-1}(Y(z)) =y(n)=7.5(3)^nu(n) - 7.5u(n)$$
